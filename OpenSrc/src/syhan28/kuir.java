@@ -14,6 +14,9 @@ public class kuir {
 		else if(args[0].equals("-i")) {
 			indexer idx = new indexer(args[1]);
 		}
+		else if(args[0].equals("-s")) {
+			searcher sc = new searcher(args[1], args[3]);
+		}
 	}
 
 }
