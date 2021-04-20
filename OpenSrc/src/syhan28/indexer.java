@@ -103,13 +103,13 @@ public class indexer {
 		return count;
 	}
 	
+	
 	public double makeIDF(double tf, double df, double n) {
 		
 		double w = tf*Math.log(n / df);
 		
 		return Math.round(w*100)/100.0;
 	}
-	
 	
 	
 	public void printHash(String filepath) throws Exception {

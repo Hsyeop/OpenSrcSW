@@ -70,7 +70,7 @@ public class searcher {
 					sim += Double.parseDouble(value.get(index + 1));
 				}
 			}
-			
+//			System.out.println(sim);
 			simsHashMap.put(docTitle, Math.round(sim*100)/100.0);
 		}
 		
