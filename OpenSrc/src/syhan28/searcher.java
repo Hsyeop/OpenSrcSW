@@ -44,7 +44,7 @@ public class searcher {
 		}
 		
 	}
-	
+
 
 	public HashMap<String, Double> CalcSim(String args, String query, NodeList titleTagList) throws Exception {
 
@@ -71,25 +71,39 @@ public class searcher {
 					value = new ArrayList<String>();
 				}
 
-//				System.out.println(words.get(j) + " : " + value);
 				String docIdNum = Integer.toString(i);
 				if (value.contains(docIdNum)) {
 					int index = value.indexOf(docIdNum);
-					masterSim += Double.parseDouble(value.get(index + 1));
 					squaredSim += Math.pow(Double.parseDouble(value.get(index + 1)), 2);
 				}
 			}
-			
+			masterSim = InnerProduct(listOfWords, thisisHashMap, values, i);
 			norm = Math.sqrt(listOfWords.size())*Math.sqrt(squaredSim);
 			cosSim = Math.round((masterSim / norm)*100)/100.0;
 			finalSimsHashMap.put(docTitle, cosSim);
-			System.out.println("코사인 유사도 : " + cosSim);
+//			System.out.println("코사인 유사도 : " + cosSim);
 		}
 		
 		return finalSimsHashMap;
 
 	}
 	
+	public Double InnerProduct(ArrayList<String> words, HashMap hashMap, ArrayList<ArrayList<String>> values, int titleNum) throws Exception {
+
+		double sim = 0;
+		
+		for (int i = 0; i < words.size(); i++) {
+			ArrayList<String> value = values.get(i);
+			String docIdNum = Integer.toString(titleNum);
+			if (value.contains(docIdNum)) {
+				int index = value.indexOf(docIdNum);
+				sim += Double.parseDouble(value.get(index + 1));
+			}
+		}
+
+		return sim;
+
+	}
 	
 	public ArrayList<String> getKey(String query) {
 		
