@@ -3,6 +3,7 @@ package syhan28;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -44,46 +45,49 @@ public class searcher {
 		
 	}
 	
-	
+
 	public HashMap<String, Double> CalcSim(String args, String query, NodeList titleTagList) throws Exception {
-		
-		ArrayList<String> words = getKey(query);
-		
-		HashMap hashMap = new HashMap();
-		hashMap = getHM(args, hashMap);
-		
-		ArrayList<ArrayList<String>> values = getValue(hashMap, words);
-		
-		HashMap<String, Double> simsHashMap = new HashMap<String, Double>();
+
+		ArrayList<String> listOfWords = getKey(query);
+		HashMap thisisHashMap = new HashMap(); 
+		thisisHashMap = getHM(args, thisisHashMap);
+		ArrayList<ArrayList<String>> values = getValue(thisisHashMap, listOfWords);
+		HashMap<String, Double> finalSimsHashMap = new HashMap<String, Double>();
 		
 		for (int i = 0; i < titleTagList.getLength(); i++) {
-			double sim = 0;
+			double masterSim = 0;
 			double squaredSim = 0;
 			double norm = 0;
 			double cosSim = 0;
+
+
 			String docTitle = titleTagList.item(i).getTextContent();
 			
-			for (int j = 0; j < words.size(); j++) {
+			for (int j = 0; j < listOfWords.size(); j++) {
 				ArrayList<String> value = values.get(j);
+
+
 				if (value == null) {
 					value = new ArrayList<String>();
 				}
+
 //				System.out.println(words.get(j) + " : " + value);
 				String docIdNum = Integer.toString(i);
 				if (value.contains(docIdNum)) {
 					int index = value.indexOf(docIdNum);
-					sim += Double.parseDouble(value.get(index + 1));
+					masterSim += Double.parseDouble(value.get(index + 1));
 					squaredSim += Math.pow(Double.parseDouble(value.get(index + 1)), 2);
 				}
 			}
 			
-			norm = Math.sqrt(words.size())*Math.sqrt(squaredSim);
-			cosSim = Math.round((sim / norm)*100)/100.0;
-			simsHashMap.put(docTitle, cosSim);
+			norm = Math.sqrt(listOfWords.size())*Math.sqrt(squaredSim);
+			cosSim = Math.round((masterSim / norm)*100)/100.0;
+			finalSimsHashMap.put(docTitle, cosSim);
 			System.out.println("코사인 유사도 : " + cosSim);
 		}
 		
-		return simsHashMap;
+		return finalSimsHashMap;
+
 	}
 	
 	
@@ -93,6 +97,7 @@ public class searcher {
 		KeywordList kl = ke.extractKeyword(query, true);
 		
 		ArrayList<String> words = new ArrayList<String>();
+		
 		for (int i = 0; i < kl.size(); i++) {
 			Keyword kwrd = kl.get(i);
 			words.add(kwrd.getString());
@@ -129,7 +134,6 @@ public class searcher {
 		}
 		
 		return values;
-		
 	}
-	
+
 }
