@@ -46,7 +46,7 @@ public class searcher {
 	}
 	
 	
-	public HashMap<String, Double> CalcSim(String args, String query, NodeList titleTagList) throws Exception {
+	public HashMap<String, Double> InnerProduct(String args, String query, NodeList titleTagList) throws Exception {
 
 		ArrayList<String> words = getKey(query);
 		
