@@ -29,7 +29,7 @@ public class searcher {
 		
 		NodeList titleTagList = document.getElementsByTagName("title");
 		
-		HashMap<String, Double> ans = CalcSim(args, query, titleTagList);
+		HashMap<String, Double> ans = InnerProduct(args, query, titleTagList);
 		
 		List<String> keySet = new ArrayList<>(ans.keySet());
 		Collections.sort(keySet);
@@ -46,7 +46,7 @@ public class searcher {
 	}
 	
 	
-	public HashMap<String, Double> CalcSim(String args, String query, NodeList titleTagList) throws Exception {
+	public HashMap<String, Double> InnerProduct(String args, String query, NodeList titleTagList) throws Exception {
 
 		ArrayList<String> words = getKey(query);
 		
